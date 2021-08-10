@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserVo> save(UserVo userVo) {
+    public ResponseEntity<UserVo> save(@RequestBody UserVo userVo) {
         return new ResponseEntity<UserVo>(userService.save(userVo), HttpStatus.OK);
     }
 }

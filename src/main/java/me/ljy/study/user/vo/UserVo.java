@@ -1,24 +1,44 @@
 package me.ljy.study.user.vo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-@Entity(name="user")
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name="USER", uniqueConstraints = {@UniqueConstraint(
+        name="USER_UNIQUE",
+        columnNames = {"userId", "email"}
+)})
+@DynamicInsert
+@DynamicUpdate
+@Getter
+@Setter
 public class UserVo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int seq;
+    private String id;
 
+    @Column(nullable = false)
     private String userId;
 
+    @Column(nullable = false)
     private String password;
 
-    public UserVo(String userId, String password) {
-        this.userId = userId;
-        this.password = password;
-    }
+    @Column(nullable = false)
+    private String name;
+
+    private String email;
+
+    private String state;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date regDt;
 
     public UserVo() {
 
